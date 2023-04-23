@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './Finantials.module.scss'
 
 type Props = {}
 
