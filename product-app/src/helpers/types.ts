@@ -4,4 +4,5 @@ export interface ProductsType {
     description: string
     image: string
     price: number
+    
 }

@@ -12,9 +12,14 @@ import { ProductsType } from "./helpers/types";
 function App() {
 
   const [products, setProducts] = useState<ProductsType[]>([])
+  const [cart, setCart] = useState<ProductsType[]>([])
   
   const productsSetterFunction = (_products: ProductsType[]) => {
     setProducts(_products)
+  }
+
+  const cartSetterFunction = (_products: ProductsType[]) => {
+    setCart(_products)
   }
 
   return (
@@ -37,7 +42,7 @@ function App() {
         <Row justify='center' align='middle'>
           <Col sm={24} lg={18}>
           <Routes>
-          <Route path="/" element={<Home products={products} productsSetterFunction={productsSetterFunction} />} />
+          <Route path="/" element={<Home products={products} productsSetterFunction={productsSetterFunction} cartSetterFunction={cartSetterFunction} cart={cart} />} />
           <Route path="/finantials" element={<Finantials />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
