@@ -5,8 +5,18 @@ import Finantials from "./finantials/Finantials";
 import { Button, Col, Menu, Row } from "antd";
 import { ShopOutlined } from "@ant-design/icons";
 import Cart from "./cart/Cart";
+import { useState } from "react";
+import { ProductsType } from "./helpers/types";
+
 
 function App() {
+
+  const [products, setProducts] = useState<ProductsType[]>([])
+  
+  const productsSetterFunction = (_products: ProductsType[]) => {
+    setProducts(_products)
+  }
+
   return (
     <div className="App">
       
@@ -27,7 +37,7 @@ function App() {
         <Row justify='center' align='middle'>
           <Col sm={24} lg={18}>
           <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home products={products} productsSetterFunction={productsSetterFunction} />} />
           <Route path="/finantials" element={<Finantials />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
