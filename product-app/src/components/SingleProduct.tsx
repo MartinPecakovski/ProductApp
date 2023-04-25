@@ -1,17 +1,17 @@
 import { Button, Col, Space } from "antd";
 import styles from "./SingleProduct.module.scss";
-import { ProductsType } from "../helpers/types";
 
 type Props = {
-  productsSetterFunction: (_products: ProductsType[]) => void;
-  products: ProductsType[];
   id: string;
   title: string;
   description: string;
   image: string;
   price: number;
-  cartSetterFunction: (_products: ProductsType[]) => void
-  cart: ProductsType[]
+  quantity?: number;
+  deleteCartProduct?: boolean;
+  onChangeQuantity?: (id: string, quantity: number) => void;
+  onDelete?: (id: string) => void;
+  onAddToCart?: (id: string) => void;
 };
 
 const SingleProduct = ({
@@ -20,13 +20,14 @@ const SingleProduct = ({
   image,
   price,
   title,
-  products,
-  productsSetterFunction,
-  cartSetterFunction,
-  cart,
+  deleteCartProduct,
+  quantity,
+  onChangeQuantity,
+  onDelete,
+  onAddToCart,
 }: Props) => {
   return (
-    <Col lg={8} md={12} sm={24}>
+    <Col lg={8} md={12} xs={24}>
       <div className={styles.card}>
         <div className={styles.imageContainer}>
           <img
@@ -44,27 +45,45 @@ const SingleProduct = ({
             <p className={styles.cardText}>{description}</p>
           </div>
           <div className={styles.ctaSection}>
-            <div className={styles.price}>${price}</div>
+            <div className={styles.price}>${price * (quantity ?? 1)}</div>
             <Space direction="vertical" align="end">
-              <Button type="default">Buy Now</Button>
-              <Button type="primary" onClick={() => 
-              {
-                const filteredProduct = products.find(val => val.title === title && val.description === description)
-                filteredProduct && cartSetterFunction([...cart, filteredProduct])
-                console.log(cart)
-              }}>Add to cart</Button>
+              {!deleteCartProduct && (
+                  <Button
+                    type="primary"
+                    onClick={() => onAddToCart && onAddToCart(id)}
+                  >
+                    Add to cart
+                  </Button>
+              )}
               <Button
-                onClick={() => {
-                  const productThatWillBeDeleted = products?.find((val) =>  val.id === id);
-                  const filteredProducts = products?.filter(val => val.id !== productThatWillBeDeleted?.id)
-                  productsSetterFunction && productsSetterFunction(filteredProducts ?? [])
-                  localStorage.setItem('products', JSON.stringify(filteredProducts))
-                }}
+                onClick={() => onDelete && onDelete(id)}
                 type="primary"
                 danger
               >
                 Delete
               </Button>
+              {quantity && (
+                <div className={styles.amount}>
+                  <Button
+                    onClick={() => {
+                      onChangeQuantity && onChangeQuantity(id, quantity + 1);
+                    }}
+                  >
+                    +
+                  </Button>
+                  <div className={styles.amountNumber}>{quantity}</div>
+                  <Button
+                    onClick={() => {
+                      onChangeQuantity && onChangeQuantity(id, quantity! - 1);
+                      if (quantity === 1) {
+                        onDelete && onDelete(id);
+                      }
+                    }}
+                  >
+                    -
+                  </Button>
+                </div>
+              )}
             </Space>
           </div>
         </div>

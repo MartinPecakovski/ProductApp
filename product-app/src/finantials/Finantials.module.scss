@@ -1,0 +1,26 @@
+.finantialContainer{
+    background-color: white;
+    border-radius: 50px;
+    padding: 15px 20px;
+    margin-top: 20px;
+
+    h4{
+        margin-bottom: 30px;
+    }
+
+    .productsTable{
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 60px;
+        border-bottom: 1px solid black;
+        font-size: 28px;
+        
+    }
+
+    .total{
+        text-align: right;
+        margin: 15px 60px;
+        font-size: 28px;
+
+    }
+}
