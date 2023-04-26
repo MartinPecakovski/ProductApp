@@ -20,7 +20,7 @@ const Finantials = ({ financials }: Props) => {
                 finantial.items.map(item => (
                   <Col span={24}>
                     <div className={styles.productsTable}>
-                    <div>{item.title}</div><div>&#36;{item.price}</div>
+                    <div>{item.title} x{item.quantity}</div><div>&#36;{item.price}</div>
                     </div>
                   </Col>
                 ))

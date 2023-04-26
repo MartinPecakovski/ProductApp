@@ -12,21 +12,17 @@ export const getFinancials = () => {
 export const createFinancial = () => {
   const cart = getCart();
 
-  if (cart.length > 0) {
+  if(cart.length > 0){
     const financialItems: FinantialItemType[] = cart.map((item) => ({
-      id: uuid(),
-      title: item.title,
-      price: item.price * item.quantity,
-    }));
+    id: uuid(),
+    title: item.title,
+    price: item.price * item.quantity,
+    quantity: item.quantity,
+  }));
 
-    const total = cart.reduce((x, y) => x + y.quantity * y.price, 0);
-    const financial = {
-      title: `#${uuid()}`,
-      items: financialItems,
-      total,
-      id: uuid(),
-    };
-    financials = [...financials, financial];
-    clearCart();
+  const total = cart.reduce((x, y) => x + y.quantity * y.price, 0);
+  const financial = { title: `#${uuid()}`, items: financialItems, total, id: uuid() };
+  financials = [...financials, financial];
+  clearCart();
   }
 };
